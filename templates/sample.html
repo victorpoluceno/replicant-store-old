@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        {% assets "js_all" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+    </head>
+    <body>
+      <div style="display:none" class="error">
+        Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Replicant.initialize</code> in this file.
+      </div>
+      
+      <div style="display:none" class="success">
+        <p>We've also just created your first object using the following code:</p>
+          <code>
+            var TestObject = Replicant.Object.extend("TestObject");<br/>
+            var testObject = new TestObject();<br/>
+            testObject.save({foo: "bar"});
+          </code>
+      </div>
+
+      <script type="text/javascript">
+        Replicant.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
+        
+        var TestObject = Replicant.Object.extend("TestObject");
+        
+        var testObject = new TestObject();
+        testObject.save({foo: "bar"}, {
+          success: function(object) {
+            $(".success").show();
+          },
+          error: function(model, error) {
+            $(".error").show();
+          }
+        });
+      </script>
+    </body>
+</html>
